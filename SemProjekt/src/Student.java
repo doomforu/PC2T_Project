@@ -5,10 +5,10 @@ import java.util.Map;
 public abstract class Student {
 	
 	private int Id;
-	private String FirstName;
-	private String LastName;
+	protected String FirstName;
+	protected String LastName;
 	private LocalDate DateOfBirth;
-	private Map<String, Float> Grades = new HashMap<>();
+	private Map<String, Float> Grades = new HashMap<String, Float>();
 	
 	public Student() {
 	}
@@ -19,8 +19,10 @@ public abstract class Student {
 		DateOfBirth = dateOfBirth;
 	}
 	
+	public abstract String ConvertName();
+	
 	@Override
 	public String toString() {
-		return String.format("%d, %s %s , %tF",Id,FirstName, LastName, DateOfBirth);
+		return String.format("%d, %s %s, %tF",Id,FirstName, LastName, DateOfBirth);
 	}
 }
