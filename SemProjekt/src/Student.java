@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Student {
+public abstract class Student implements Comparable<Student>{
 	
 	private int Id;
 	protected String FirstName;
@@ -18,11 +18,24 @@ public abstract class Student {
 		LastName = lastName;
 		DateOfBirth = dateOfBirth;
 	}
-	
+	public boolean NewGrade(String id, float grade, boolean overwrite) {
+		if(Grades.containsKey(id)&&!overwrite)
+			return false;
+		if(Grades.containsKey(id)&&overwrite) {
+			Grades.put(id,  grade);
+			return true;
+		}
+		Grades.put(id,  grade);
+		return true;
+	}
 	public abstract String ConvertName();
 	
 	@Override
 	public String toString() {
 		return String.format("%d, %s %s, %tF",Id,FirstName, LastName, DateOfBirth);
+	}
+	@Override
+	public int compareTo(Student other) {
+		return this.LastName.compareTo(other.LastName);
 	}
 }

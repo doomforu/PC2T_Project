@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StudentTLI extends Student {
+public class StudentTLI extends Student{
 	
 	public StudentTLI(int id, String firstName, String lastName, LocalDate dateOfBirth) {
 		super(id, firstName, lastName,dateOfBirth);
@@ -37,4 +37,5 @@ public class StudentTLI extends Student {
 			i++;
 		}
 	}
+
 }
