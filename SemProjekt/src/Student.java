@@ -29,10 +29,21 @@ public abstract class Student implements Comparable<Student>{
 		return true;
 	}
 	public abstract String ConvertName();
-	
+	public float AvgGrade() {
+		int count = 0;
+		float total = 0;
+		for(float g : Grades.values()) {
+			count++;
+			total +=g;
+		}
+		return total/count;
+	}
+	public Map<String, Float> GetGrades(){
+		return Grades;
+	}
 	@Override
 	public String toString() {
-		return String.format("%d, %s %s, %tF",Id,FirstName, LastName, DateOfBirth);
+		return String.format("%d;\t%s;\t%s;\t%tF;\t%.2f;",Id,FirstName, LastName, DateOfBirth, this.AvgGrade());
 	}
 	@Override
 	public int compareTo(Student other) {

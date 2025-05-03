@@ -1,21 +1,69 @@
-import java.time.LocalDate;
+import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
-		
-		Student[] studenti = new Student[2];
-		DbModel test = new DbModel();
-		test.Add(false, "Petr", "Mrazek", LocalDate.parse("1992-02-14"));
-		test.Add(true, "Filip", "Hojer", LocalDate.parse("2002-09-10"));
-		
-		test.PrintSorted();
-		studenti[0] = new StudentTLI(256737, "Filip", "Hojer", LocalDate.parse("2002-09-10"));
-		studenti[1] = new StudentIBE(256739, "Petr", "Mrazek", LocalDate.parse("1992-02-14"));
-		System.out.println(studenti[0]);
-		System.out.println(studenti[1]);
-		System.out.println(studenti[0].ConvertName());
-		System.out.println(studenti[1].ConvertName());
+		CLIHandler cli = new CLIHandler();
+		DbModel db = new DbModel();
+		Scanner sc = new Scanner(System.in);
+		boolean run=true;
+		while(run)
+		{
+			System.out.println("Vyberte pozadovanou cinnost:");
+			System.out.println("1 .. pridani noveho studenta");
+			System.out.println("2 .. zadani znamky");
+			System.out.println("3 .. propusteni studenta");
+			System.out.println("4 .. vypis informace o studentovi");
+			System.out.println("5 .. vypis vsech studentu");
+			System.out.println("6 .. spusteni dovednosti studenta");
+			System.out.println("7 .. vypis prumeru v oborech");
+			System.out.println("8 .. vypis poctu studentu");
+			System.out.println("9 .. ulozeni studenta do souboru");
+			System.out.println("10 .. nacteni studenta ze souboru");
+			System.out.println("11 .. konec");
+			int opt;
+			while(!sc.hasNextInt()) {
+				System.out.println("Zadejte cele cislo");
+				sc.next();
+			}
+			opt = sc.nextInt();
+			switch(opt)
+			{
+			case 1:
+				cli.AddStudent(db);
+				break;
+			case 2:
+				cli.AddGrade(db);
+				break;
+			case 3:
+				cli.RemoveStudent(db);
+				break;
+			case 4:
+				cli.PrintStudentInfo(db);
+				break;
+			case 5:
+				cli.PrintAllStudents(db);
+				break;
+			case 6:
+				cli.PrintConvertedName(db);
+				break;
+			case 7:
+				cli.PrintAvgGrades(db);
+				break;
+			case 8:
+				cli.PrintStudentCount(db);
+				break;
+			case 9:
+				cli.LoadFromFile(db);
+				break;
+			case 10:
+				cli.SaveToFile(db);
+				break;
+			case 11:
+				run = false;
+				break;
+			}
+		}
 	}
 
 }
