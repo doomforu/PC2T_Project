@@ -10,21 +10,27 @@ import java.util.List;
 import java.util.Map;
 
 public class DbModel {
-	private int last_id;
-	private Map<Integer, Student> students = new HashMap<Integer, Student>();
 	
+	private int last_id;
+	protected Map<Integer, Student> students = new HashMap<Integer, Student>();
+	public void SetLastId(int last) {
+		last_id = last;
+	}
 	public DbModel() {
 		
 	}
-	public void Add(String field, String firstName, String lastName, LocalDate dateOfBirth) {
+	public boolean Add(String field, String firstName, String lastName, LocalDate dateOfBirth) {
 		if(field.equals("tli")) {
 			students.put(last_id+1, new StudentTLI(last_id+1, firstName, lastName, dateOfBirth));
 			last_id++;
+			return true;
 		}
 		if(field.equals("ibe")) {
 			students.put(last_id+1, new StudentIBE(last_id+1, firstName, lastName, dateOfBirth));
 			last_id++;
+			return true;
 		}
+		return false;
 	}
 	
 	public boolean AddGrade(int id, String subjectId, float grade) {
@@ -66,8 +72,10 @@ public class DbModel {
 		float total = 0;
 		List<StudentTLI> tli = this.GetTLI();
 		for(StudentTLI s : tli) {
-				count++;
-				total += s.AvgGrade();
+			if(Float.isNaN(s.AvgGrade()))
+				continue;
+			count++;
+			total += s.AvgGrade();
 			
 		}
 		return total/count;
@@ -77,8 +85,10 @@ public class DbModel {
 		float total = 0;
 		List<StudentIBE> ibe = this.GetIBE();
 		for(StudentIBE s : ibe) {
-				count++;
-				total += s.AvgGrade();
+			if(Float.isNaN(s.AvgGrade()))
+				continue;
+			count++;
+			total += s.AvgGrade();
 			
 		}
 		return total/count;
@@ -98,14 +108,14 @@ public class DbModel {
 		return count;
 	}
 	
-	private List<StudentTLI> GetTLI(){
+	public List<StudentTLI> GetTLI(){
 		List<StudentTLI> tli = new ArrayList<StudentTLI>();
 		for(Student s : students.values())
 			if(s.getClass() == StudentTLI.class) 
 				tli.add((StudentTLI) s);
 		return tli;	
 	}
-	private List<StudentIBE> GetIBE(){
+	public List<StudentIBE> GetIBE(){
 		List<StudentIBE> ibe = new ArrayList<StudentIBE>();
 		for(Student s : students.values())
 			if(s.getClass() == StudentIBE.class) 

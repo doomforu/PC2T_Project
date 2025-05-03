@@ -1,11 +1,19 @@
+import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
+		Locale.setDefault(Locale.US);
 		CLIHandler cli = new CLIHandler();
 		DbModel db = new DbModel();
 		Scanner sc = new Scanner(System.in);
+		try {
+			DbConnect.Load(db);
+		} catch (SQLException | NullPointerException e) {
+			e.printStackTrace();
+		}
 		boolean run=true;
 		while(run)
 		{
@@ -14,7 +22,7 @@ public class Main {
 			System.out.println("2 .. zadani znamky");
 			System.out.println("3 .. propusteni studenta");
 			System.out.println("4 .. vypis informace o studentovi");
-			System.out.println("5 .. vypis vsech studentu");
+			System.out.println("5 .. vypis vsech studentu podle abecedy");
 			System.out.println("6 .. spusteni dovednosti studenta");
 			System.out.println("7 .. vypis prumeru v oborech");
 			System.out.println("8 .. vypis poctu studentu");
@@ -54,15 +62,20 @@ public class Main {
 				cli.PrintStudentCount(db);
 				break;
 			case 9:
-				cli.LoadFromFile(db);
+				cli.SaveToFile(db);
 				break;
 			case 10:
-				cli.SaveToFile(db);
+				cli.LoadFromFile(db);
 				break;
 			case 11:
 				run = false;
 				break;
 			}
+		}
+		try {
+			DbConnect.Save(db);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 

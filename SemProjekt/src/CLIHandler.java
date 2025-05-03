@@ -9,10 +9,6 @@ public class CLIHandler {
 	Scanner sc = new Scanner(System.in);
 	public void AddStudent(DbModel db) {
 		System.out.println("Zadejte obor (tli/ibe), jmeno, prijmeni a rok narozeni (YYYY-MM-DD)");
-		while(!sc.next().toLowerCase().equals("tli")||!sc.next().toLowerCase().equals("ibe")){
-			System.out.println("Zvolte jeden z dostupnych oboru (tli/ibe)");
-			sc.next();
-		}
 		String field = sc.next();
 		String firstName = sc.next();
 		String lastName = sc.next();
@@ -29,7 +25,8 @@ public class CLIHandler {
 				System.out.println("Nespravny format, datum zadavejte ve formatu YYYY-MM-DD vcetne pomlcek");
 			}
 		}
-		db.Add(field, firstName, lastName, dob);
+		if(!db.Add(field, firstName, lastName, dob))
+			System.out.println("Nespravny format oboru");
 	}
 	public void AddGrade(DbModel db) {
 		System.out.println("Zadejte id studenta, zkratku predmetu a znamku");

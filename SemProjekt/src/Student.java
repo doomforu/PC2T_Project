@@ -4,11 +4,11 @@ import java.util.Map;
 
 public abstract class Student implements Comparable<Student>{
 	
-	private int Id;
+	protected int Id;
 	protected String FirstName;
 	protected String LastName;
-	private LocalDate DateOfBirth;
-	private Map<String, Float> Grades = new HashMap<String, Float>();
+	protected LocalDate DateOfBirth;
+	protected Map<String, Float> Grades = new HashMap<String, Float>();
 	
 	public Student() {
 	}
